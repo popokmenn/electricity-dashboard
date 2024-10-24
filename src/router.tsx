@@ -1,9 +1,9 @@
 import { Suspense, lazy } from 'react';
-import { Navigate } from 'react-router-dom';
 import { RouteObject } from 'react-router';
+import { Navigate } from 'react-router-dom';
 
-import SidebarLayout from 'src/layouts/SidebarLayout';
 import BaseLayout from 'src/layouts/BaseLayout';
+import SidebarLayout from 'src/layouts/SidebarLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
 
@@ -15,30 +15,17 @@ const Loader = (Component) => (props) =>
 );
 
 // Pages
-
-const Overview = Loader(lazy(() => import('src/content/overview')));
+const Login = Loader(lazy(() => import('src/content/auth')));
 
 // Dashboards
-
-const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
 const Summary = Loader(lazy(() => import('src/content/dashboards/Summary')));
-// Applications
 
-const Messenger = Loader(
-  lazy(() => import('src/content/applications/Messenger'))
-);
+// Applications
 const Transactions = Loader(
   lazy(() => import('src/content/applications/Transactions'))
 );
-const UserProfile = Loader(
-  lazy(() => import('src/content/applications/Users/profile'))
-);
-const UserSettings = Loader(
-  lazy(() => import('src/content/applications/Users/settings'))
-);
 
 // Components
-
 const Buttons = Loader(
   lazy(() => import('src/content/pages/Components/Buttons'))
 );
@@ -62,7 +49,6 @@ const Cards = Loader(lazy(() => import('src/content/pages/Components/Cards')));
 const Forms = Loader(lazy(() => import('src/content/pages/Components/Forms')));
 
 // Status
-
 const Status404 = Loader(
   lazy(() => import('src/content/pages/Status/Status404'))
 );
@@ -83,7 +69,7 @@ const routes: RouteObject[] = [
     children: [
       {
         path: '/',
-        element: <Overview />
+        element: <Login />
       },
       {
         path: 'overview',
@@ -146,23 +132,6 @@ const routes: RouteObject[] = [
       {
         path: 'transactions',
         element: <Transactions />
-      },
-      {
-        path: 'profile',
-        children: [
-          {
-            path: '',
-            element: <Navigate to="details" replace />
-          },
-          {
-            path: 'details',
-            element: <UserProfile />
-          },
-          {
-            path: 'settings',
-            element: <UserSettings />
-          }
-        ]
       }
     ]
   },

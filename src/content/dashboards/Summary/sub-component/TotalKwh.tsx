@@ -1,23 +1,20 @@
 import {
-  Button,
-  Card,
   Box,
   Grid,
-  Typography,
-  useTheme,
+  List,
+  Card,
+  Button,
   styled,
   Avatar,
   Divider,
-  alpha,
+  useTheme,
   ListItem,
+  Typography,
   ListItemText,
-  List,
-  ListItemAvatar
 } from '@mui/material';
 import TrendingUp from '@mui/icons-material/TrendingUp';
 import Text from 'src/components/Text';
 import Chart from 'react-apexcharts';
-import { chartOptions, chartSeries } from './_chart';
 import type { ApexOptions } from 'apexcharts';
 
 const AvatarSuccess = styled(Avatar)(
@@ -116,13 +113,6 @@ function TotalKwh() {
               <Typography variant="h1" gutterBottom>
                 {Math.random().toFixed(2)}
               </Typography>
-              {/* <Typography
-                variant="h4"
-                fontWeight="normal"
-                color="text.secondary"
-              >
-                1.0045983485234 BTC
-              </Typography> */}
               <Box
                 display="flex"
                 sx={{

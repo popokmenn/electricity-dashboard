@@ -45,7 +45,6 @@
     "react/jsx-props-no-spreading": "off",
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
-    "typescript-eslint/no-unused-vars": "off",
     "import/no-extraneous-dependencies": "off",
     "react/no-unescaped-entities": "off",
     "react/forbid-prop-types": "off",
@@ -56,11 +55,7 @@
         "when": "multiline"
       }
     ],
-    "indent": "off",
     "@typescript-eslint/indent": [0],
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["off"],
-    "@typescript-eslint/no-unused-vars": ["off"],
     "@typescript-eslint/no-shadow": ["off"],
     "@typescript-eslint/dot-notation": ["off"],
     "react/prop-types": ["off"],
