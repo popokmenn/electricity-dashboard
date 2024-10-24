@@ -17,6 +17,7 @@ import {
 
 import SidebarMenu from './SidebarMenu';
 import Logo from 'src/components/LogoSign';
+import logoX from 'public/xti.png';
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `
@@ -62,7 +63,7 @@ function Sidebar() {
                 width: 52
               }}
             >
-              <Logo />
+              <img src='/static/images/logo/xti.png' width={100} style={{ marginLeft: 20 }} />
             </Box>
           </Box>
           <Divider
@@ -79,19 +80,6 @@ function Sidebar() {
             background: theme.colors.alpha.trueWhite[10]
           }}
         />
-        <Box p={2}>
-          <Button
-            href="https://bloomui.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="contained"
-            color="warning"
-            size="small"
-            fullWidth
-          >
-            Upgrade to PRO
-          </Button>
-        </Box>
       </SidebarWrapper>
       <Drawer
         sx={{

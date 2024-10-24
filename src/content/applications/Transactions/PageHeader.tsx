@@ -4,17 +4,18 @@ import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 
 function PageHeader() {
   const user = {
-    name: 'Catherine Pike',
+    name: 'Administrator',
     avatar: '/static/images/avatars/1.jpg'
   };
   return (
     <Grid container justifyContent="space-between" alignItems="center">
       <Grid item>
         <Typography variant="h3" component="h3" gutterBottom>
-          Transactions
+          kWh Unit
         </Typography>
         <Typography variant="subtitle2">
-          {user.name}, these are your recent transactions
+          {/* {user.name}, these are your recent transactions */}
+          Detail usage of all units
         </Typography>
       </Grid>
       <Grid item>
@@ -23,7 +24,7 @@ function PageHeader() {
           variant="contained"
           startIcon={<AddTwoToneIcon fontSize="small" />}
         >
-          Create transaction
+          Create unit
         </Button>
       </Grid>
     </Grid>

@@ -16,6 +16,8 @@ import {
   Typography
 } from '@mui/material';
 
+import { Link as RouterLink } from 'react-router-dom';
+
 import InboxTwoToneIcon from '@mui/icons-material/InboxTwoTone';
 import { styled } from '@mui/material/styles';
 import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
@@ -60,7 +62,7 @@ const UserBoxDescription = styled(Typography)(
 
 function HeaderUserbox() {
   const user = {
-    name: 'Catherine Pike',
+    name: 'Administrator',
     avatar: '/static/images/avatars/1.jpg',
     jobtitle: 'Project Manager'
   };
@@ -135,7 +137,7 @@ function HeaderUserbox() {
         </List>
         <Divider />
         <Box sx={{ m: 1 }}>
-          <Button color="primary" fullWidth>
+          <Button color="primary" fullWidth component={RouterLink} to="/overview">
             <LockOpenTwoToneIcon sx={{ mr: 1 }} />
             Sign out
           </Button>

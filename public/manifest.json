@@ -4,7 +4,7 @@
   "display": "standalone",
   "start_url": ".",
   "short_name": "Tokyo Free White",
-  "name": "Tokyo Free White React Typescript Admin Dashboard",
+  "name": "Xapiens Teknologi Indonesia",
   "icons": [
     {
       "src": "/icon-192x192.png",
@@ -23,6 +23,11 @@
     },
     {
       "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/xti.png",
       "sizes": "512x512",
       "type": "image/png"
     }
