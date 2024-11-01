@@ -23,6 +23,7 @@ function Hero() {
           <TypographyH1 sx={{ mb: 2 }} variant="h3">
             Welcome
           </TypographyH1>
+
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <TextField
               required

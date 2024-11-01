@@ -33,6 +33,7 @@ function Overview() {
       <Helmet>
         <title>Xapiens Teknologi Indonesia</title>
       </Helmet>
+
       <Container maxWidth="sm">
         <Box display="flex" justifyContent="center" py={5} alignItems="center">
           <img src="/static/images/logo/xapiens.png" alt="Xapiens" width={100} />
