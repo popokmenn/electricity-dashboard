@@ -1,12 +1,16 @@
-import { Helmet } from 'react-helmet-async';
-import PageHeader from './PageHeader';
-import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Grid, Container } from '@mui/material';
 import Footer from 'src/components/Footer';
+import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
+import { Grid, Container, Card } from '@mui/material';
+import PageTitleWrapper from 'src/components/PageTitleWrapper';
 
-import RecentOrders from './RecentOrders';
+import CustomTable from 'src/components/Table';
+import { units } from './sub-component/data';
+import PageHeader from './sub-component/PageHeader';
 
 function ApplicationsTransactions() {
+  const navigate = useNavigate();
+
   return (
     <>
       <Helmet>
@@ -24,7 +28,32 @@ function ApplicationsTransactions() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <RecentOrders />
+            <Card>
+              <CustomTable data={units} title="Units"
+                navigateAction={{
+                  onClickDetails: (id: string) => {
+                    navigate(`/management/transactions/detail/${id}`, { state: { id: id } });
+                  }
+                }}
+                columns={[
+                  {
+                    label: 'Building',
+                    field: 'building'
+                  },
+                  {
+                    label: 'Unit',
+                    field: 'unit'
+                  },
+                  {
+                    label: 'Device ID',
+                    field: 'deviceId'
+                  },
+                  {
+                    label: 'Device Name',
+                    field: 'deviceName'
+                  }
+                ]} />
+            </Card>
           </Grid>
         </Grid>
       </Container>

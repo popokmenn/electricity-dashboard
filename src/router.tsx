@@ -4,7 +4,6 @@ import { Navigate } from 'react-router-dom';
 
 import BaseLayout from 'src/layouts/BaseLayout';
 import SidebarLayout from 'src/layouts/SidebarLayout';
-
 import SuspenseLoader from 'src/components/SuspenseLoader';
 
 const Loader = (Component) => (props) =>
@@ -23,6 +22,9 @@ const Summary = Loader(lazy(() => import('src/content/dashboards/Summary')));
 // Applications
 const Transactions = Loader(
   lazy(() => import('src/content/applications/Transactions'))
+);
+const TransactionsDetail = Loader(
+  lazy(() => import('src/content/applications/Transactions/Detail'))
 );
 
 // Components
@@ -132,6 +134,10 @@ const routes: RouteObject[] = [
       {
         path: 'transactions',
         element: <Transactions />
+      },
+      {
+        path: 'transactions/detail/:id',
+        element: <TransactionsDetail />
       }
     ]
   },

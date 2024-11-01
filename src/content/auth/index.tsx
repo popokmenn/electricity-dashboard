@@ -2,7 +2,7 @@ import { Box, Container, Card, Grid } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 
 import { styled } from '@mui/material/styles';
-import Hero from './login';
+import Login from './Login';
 
 const OverviewWrapper = styled(Box)(
   () => `
@@ -38,7 +38,7 @@ function Overview() {
           <img src="/static/images/logo/xapiens.png" alt="Xapiens" width={100} />
         </Box>
         <Card sx={{ p: 10, mb: 10, borderRadius: 5 }}>
-          <Hero />
+          <Login />
         </Card>
       </Container>
       <Grid container justifyContent="center" alignItems="center">

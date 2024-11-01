@@ -4,6 +4,7 @@ import { Theme } from '@mui/material';
 import { PureLightTheme } from './schemes/PureLightTheme';
 
 export function themeCreator(theme: string): Theme {
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   return themeMap[theme];
 }
 

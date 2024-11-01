@@ -5,8 +5,27 @@ import { Container, Grid, Typography } from '@mui/material';
 import Rank from './sub-component/Rank';
 import TotalKwh from './sub-component/TotalKwh';
 import WatchList from './sub-component/WatchList';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { createMqttClient } from 'src/util/mqtt-client';
 
 function DashboardCrypto() {
+  const [message, setMessage] = useState<string>('');
+
+  useEffect(() => {
+    const topic = 'Gedung-1/tamananggrek/uplink/telemetry/modem1/45610294848'; // Replace with your topic
+
+    const client = createMqttClient(topic, (msg) => {
+      setMessage(msg);
+    });
+
+    // Cleanup on component unmount
+    return () => {
+      client.end();
+    };
+  }, []);
+  console.log(message);
+
   return (
     <>
       <Helmet>

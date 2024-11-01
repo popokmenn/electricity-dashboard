@@ -1,15 +1,7 @@
-export type CryptoOrderStatus = 'completed' | 'pending' | 'failed';
-
-export interface CryptoOrder {
+export interface Unit {
   id: string;
-  status: CryptoOrderStatus;
-  orderDetails: string;
-  orderDate: number;
-  orderID: string;
-  sourceName: string;
-  sourceDesc: string;
-  amountCrypto: number;
-  amount: number;
-  cryptoCurrency: string;
-  currency: string;
+  building: string;
+  unit: string;
+  deviceId: string;
+  deviceName: string;
 }

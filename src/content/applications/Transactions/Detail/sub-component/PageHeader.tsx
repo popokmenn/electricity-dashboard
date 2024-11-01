@@ -1,30 +1,25 @@
 import { Typography, Button, Grid } from '@mui/material';
-
-import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
 
 function PageHeader() {
-  const user = {
-    name: 'Administrator',
-    avatar: '/static/images/avatars/1.jpg'
-  };
   return (
     <Grid container justifyContent="space-between" alignItems="center">
       <Grid item>
         <Typography variant="h3" component="h3" gutterBottom>
-          kWh Unit
+          Usage Detail
         </Typography>
         <Typography variant="subtitle2">
-          {/* {user.name}, these are your recent transactions */}
-          Detail usage of all units
+          Detail usage of units
         </Typography>
       </Grid>
       <Grid item>
         <Button
           sx={{ mt: { xs: 2, md: 0 } }}
           variant="contained"
-          startIcon={<AddTwoToneIcon fontSize="small" />}
+          color="warning"
+          startIcon={<DescriptionTwoToneIcon fontSize="small" />}
         >
-          Create unit
+          Export to PDF
         </Button>
       </Grid>
     </Grid>
