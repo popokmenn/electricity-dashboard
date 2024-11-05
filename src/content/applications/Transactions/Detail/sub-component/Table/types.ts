@@ -8,5 +8,5 @@ export interface EnergyData {
     reactPower: number;
     appPower: number;
     freq: number;
-    dateTime: string;
+    timestamp: string;
 }
