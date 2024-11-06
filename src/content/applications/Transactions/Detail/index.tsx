@@ -1,15 +1,17 @@
-import { Helmet } from 'react-helmet-async';
-import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import PageHeader from './sub-component/PageHeader';
 import { useLocation } from 'react-router';
-import { units } from '../sub-component/data';
 import { useState, useEffect } from 'react';
-import { Unit } from 'src/models/crypto_order';
+import { Helmet } from 'react-helmet-async';
 import { Container, Grid, Typography } from '@mui/material';
+
+import { useSensorData } from './hooks';
+import { units } from '../sub-component/data';
 import WatchList from './sub-component/WatchList';
+import PageHeader from './sub-component/PageHeader';
 import { EnergyData } from './sub-component/Table/types';
 import WatchListColumn from './sub-component/WatchListColumn';
-import { useSensorData } from './hooks';
+
+import { Unit } from 'src/models/crypto_order';
+import PageTitleWrapper from 'src/components/PageTitleWrapper';
 
 function TransactionsDetail() {
     const { data: { unitDetail }, method: { fetchSensorData } } = useSensorData();
@@ -30,9 +32,6 @@ function TransactionsDetail() {
         setUnitDetailPrevious(unitDetail[unitDetail.length - 2]);
         setUnitDetailCurrent({ ...unitDetail[unitDetail.length - 1], timestamp: new Date().toLocaleString() });
     }, [unitDetail]);
-
-
-    console.log('unitDetailCurrent', unitDetail.map(detail => detail.actEn).flat());
 
     return (
         <>

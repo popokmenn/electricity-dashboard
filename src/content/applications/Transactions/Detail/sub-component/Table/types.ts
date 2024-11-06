@@ -9,4 +9,14 @@ export interface EnergyData {
     appPower: number;
     freq: number;
     timestamp: string;
+    serialNum: string;
+}
+export interface SummaryEnergyData {
+    serialNum: string;
+    totalacten: number;
+    totalreacten: number;
+    totalappen: number;
+    totalactpower: number;
+    totalreactpower: number;
+    totalapppower: number;
 }

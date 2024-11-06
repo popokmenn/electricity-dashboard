@@ -16,6 +16,8 @@ import TrendingUp from '@mui/icons-material/TrendingUp';
 import Text from 'src/components/Text';
 import Chart from 'react-apexcharts';
 import type { ApexOptions } from 'apexcharts';
+import { EnergyData } from 'src/content/applications/Transactions/Detail/sub-component/Table/types';
+import moment from 'moment';
 
 const AvatarSuccess = styled(Avatar)(
   ({ theme }) => `
@@ -26,7 +28,7 @@ const AvatarSuccess = styled(Avatar)(
       box-shadow: ${theme.colors.shadows.success};
 `
 );
-function TotalKwh() {
+function TotalKwh({ totalKwh, x, y, totalkwhlist }: { totalKwh: number, x: string[], y: number[], totalkwhlist: EnergyData[] }) {
   const theme = useTheme();
   const chartOptions: ApexOptions = {
     chart: {
@@ -46,8 +48,8 @@ function TotalKwh() {
     colors: ['#ff9900', '#1c81c2', '#333', '#5c6ac0'],
     dataLabels: {
       enabled: true,
-      formatter: function (val) {
-        return val + '%';
+      formatter: function (val: number) {
+        return val.toFixed(2) + '%';
       },
       style: {
         colors: [theme.colors.alpha.trueWhite[100]]
@@ -80,7 +82,7 @@ function TotalKwh() {
     fill: {
       opacity: 1
     },
-    labels: ['Bitcoin', 'Ripple', 'Cardano', 'Ethereum'],
+    labels: x,
     legend: {
       labels: {
         colors: theme.colors.alpha.trueWhite[100]
@@ -95,7 +97,7 @@ function TotalKwh() {
     }
   };
 
-  const chartSeries = [10, 20, 25, 45];
+  const chartSeries = y;
   return (
     <Card>
       <Grid spacing={0} container>
@@ -111,7 +113,7 @@ function TotalKwh() {
             </Typography>
             <Box>
               <Typography variant="h1" gutterBottom>
-                {Math.random().toFixed(2)}
+                {totalKwh}
               </Typography>
               <Box
                 display="flex"
@@ -187,74 +189,27 @@ function TotalKwh() {
                     width: '100%'
                   }}
                 >
-                  <ListItem disableGutters>
-                    <ListItemText
-                      primary="Unit A"
-                      primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary="Apartment 101, Floor 5, Building A"
-                      secondaryTypographyProps={{
-                        variant: 'subtitle2',
-                        noWrap: true
-                      }}
-                    />
-                    <Box>
-                      <Typography align="right" variant="h4" noWrap>
-                        20%
-                      </Typography>
-                      <Text color="success">+2.54%</Text>
-                    </Box>
-                  </ListItem>
-                  <ListItem disableGutters>
-                    <ListItemText
-                      primary="Unit B"
-                      primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary="Apartment 101, Floor 5, Building B"
-                      secondaryTypographyProps={{
-                        variant: 'subtitle2',
-                        noWrap: true
-                      }}
-                    />
-                    <Box>
-                      <Typography align="right" variant="h4" noWrap>
-                        10%
-                      </Typography>
-                      <Text color="error">-1.22%</Text>
-                    </Box>
-                  </ListItem>
-                  <ListItem disableGutters>
-                    <ListItemText
-                      primary="Unit C"
-                      primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary="Apartment 101, Floor 5, Building C"
-                      secondaryTypographyProps={{
-                        variant: 'subtitle2',
-                        noWrap: true
-                      }}
-                    />
-                    <Box>
-                      <Typography align="right" variant="h4" noWrap>
-                        40%
-                      </Typography>
-                      <Text color="success">+10.50%</Text>
-                    </Box>
-                  </ListItem>
-                  <ListItem disableGutters>
-                    <ListItemText
-                      primary="Unit D"
-                      primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary="Apartment 101, Floor 5, Building D"
-                      secondaryTypographyProps={{
-                        variant: 'subtitle2',
-                        noWrap: true
-                      }}
-                    />
-                    <Box>
-                      <Typography align="right" variant="h4" noWrap>
-                        30%
-                      </Typography>
-                      <Text color="error">-12.38%</Text>
-                    </Box>
-                  </ListItem>
+                  {
+                    totalkwhlist.map((item, index) => (
+                      <ListItem disableGutters key={index}>
+                        <ListItemText
+                          primary={item.serialNum}
+                          primaryTypographyProps={{ variant: 'h5', noWrap: true }}
+                          secondary={moment(item.timestamp).format('DD-MM-YYYY HH:mm:ss')}
+                          secondaryTypographyProps={{
+                            variant: 'subtitle2',
+                            noWrap: true
+                          }}
+                        />
+                        <Box>
+                          <Typography align="right" variant="h4" noWrap>
+                            {item.actEn}
+                          </Typography>
+                          <Text color="success">+10.50%</Text>
+                        </Box>
+                      </ListItem>
+                    ))
+                  }
                 </List>
               </Grid>
             </Grid>
