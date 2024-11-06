@@ -59,13 +59,13 @@ function DashboardCrypto() {
             <Typography variant="h3">Energy</Typography>
             <Grid item pt={2} sx={{ display: 'flex', gap: 4, justifyContent: 'start' }}>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Active Energy All Unit (kWh) " value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.totalacten, 0)} previousValue={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.totalacten, 0)} />
+                <InfoCard label="Active Energy All Unit (kWh) " value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.actEn, 0)} previousValue={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.actEn, 0)} />
               </Grid>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Apparent Energy All Unit (kWh) " value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.totalappen, 0)} previousValue={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.totalappen, 0)} />
+                <InfoCard label="Apparent Energy All Unit (kWh) " value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.appEn, 0)} previousValue={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.appEn, 0)} />
               </Grid>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Reactive Energy All Unit (kVARh) " value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.totalreacten, 0)} previousValue={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.totalreacten, 0)} />
+                <InfoCard label="Reactive Energy All Unit (kVARh) " value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.reactEn, 0)} previousValue={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.reactEn, 0)} />
               </Grid>
             </Grid>
           </Grid>
@@ -73,13 +73,13 @@ function DashboardCrypto() {
             <Typography variant="h3">Power</Typography>
             <Grid item pt={2} sx={{ display: 'flex', gap: 4, justifyContent: 'start' }}>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Active Power All Unit (kWh) " value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.totalactpower, 0)} previousValue={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.totalactpower, 0)} />
+                <InfoCard label="Active Power All Unit (kWh) " value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.actPower, 0)} previousValue={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.actPower, 0)} />
               </Grid>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Apparent Power All Unit (kWh) " value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.totalapppower, 0)} previousValue={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.totalapppower, 0)} />
+                <InfoCard label="Apparent Power All Unit (kWh) " value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.appPower, 0)} previousValue={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.appPower, 0)} />
               </Grid>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Reactive Power All Unit (kVARh) " value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.totalreactpower, 0)} previousValue={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.totalreactpower, 0)} />
+                <InfoCard label="Reactive Power All Unit (kVARh) " value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.reactPower, 0)} previousValue={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.reactPower, 0)} />
               </Grid>
             </Grid>
           </Grid>

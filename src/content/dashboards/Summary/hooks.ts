@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { supabase } from "src/util/supabase-client";
-import { EnergyData, SummaryEnergyData } from "src/content/applications/Transactions/Detail/sub-component/Table/types";
+import { EnergyData } from "src/content/applications/Transactions/Detail/sub-component/Table/types";
 
 const useSummary = () => {
     const [totalKwhAllUnit, setTotalKwhAllUnit] = useState<number>(0);
     const [averageVolt, setAverageVolt] = useState<number>(0);
     const [averageFreq, setAverageFreq] = useState<number>(0);
     const [totalKwhAllUnitList, setTotalKwhAllUnitList] = useState<EnergyData[]>([]);
-    const [summaryPowerEnergyAllUnitList, setSummaryPowerEnergyAllUnitList] = useState<SummaryEnergyData[]>([]);
+    const [summaryPowerEnergyAllUnitList, setSummaryPowerEnergyAllUnitList] = useState<EnergyData[]>([]);
 
     const fetchTotalKwhAllUnit = async () => {
         try {
