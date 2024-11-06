@@ -52,18 +52,18 @@ function TransactionsDetail() {
                         <WatchList value={unitDetailCurrent?.current} previousValue={unitDetailPrevious?.current} label='Current (A)' />
                     </Grid>
                     <Grid item xs={12} md={3}>
-                        <WatchList value={unitDetailCurrent?.actEn} previousValue={unitDetailPrevious?.actEn} label='Active Energy (kWh)' />
+                        <WatchList value={unitDetailCurrent?.actEn} previousValue={unitDetailPrevious?.actEn} label='Active Energy (Wh)' />
                     </Grid>
                     <Grid item xs={12} md={3}>
-                        <WatchList value={unitDetailCurrent?.reactEn} previousValue={unitDetailPrevious?.reactEn} label='Reactive Energy (kVARh)' />
+                        <WatchList value={unitDetailCurrent?.reactEn} previousValue={unitDetailPrevious?.reactEn} label='Reactive Energy (VARh)' />
                     </Grid>
                 </Grid>
                 <Grid container spacing={3} pb={4}>
                     <Grid item xs={12} md={3}>
-                        <WatchList value={unitDetailCurrent?.actPower} previousValue={unitDetailPrevious?.actPower} label='Active Power (kW)' />
+                        <WatchList value={unitDetailCurrent?.actPower} previousValue={unitDetailPrevious?.actPower} label='Active Power (W)' />
                     </Grid>
                     <Grid item xs={12} md={3}>
-                        <WatchList value={unitDetailCurrent?.appPower} previousValue={unitDetailPrevious?.appPower} label='Apparent Power (kVA)' />
+                        <WatchList value={unitDetailCurrent?.appPower} previousValue={unitDetailPrevious?.appPower} label='Apparent Power (VA)' />
                     </Grid>
                     <Grid item xs={12} md={3}>
                         <WatchList value={unitDetailCurrent?.freq} previousValue={unitDetailPrevious?.freq} label='Frequency (Hz)' />
@@ -74,7 +74,7 @@ function TransactionsDetail() {
                     <Grid item xs={12} md={4}>
                         <WatchListColumn
                             currentValue={unitDetailCurrent?.actEn}
-                            title='Active Energy (kWh)'
+                            title='Active Energy (Wh)'
                             x={unitDetail.map(detail => detail.timestamp).flat()}
                             y={unitDetail.map(detail => detail.actEn).flat()}
                         />
@@ -82,7 +82,7 @@ function TransactionsDetail() {
                     <Grid item xs={12} md={4}>
                         <WatchListColumn
                             currentValue={unitDetailCurrent?.actPower}
-                            title='Active Power (kW)'
+                            title='Active Power (W)'
                             x={unitDetail.map(detail => detail.timestamp).flat()}
                             y={unitDetail.map(detail => detail.actPower).flat()}
                         />
@@ -90,7 +90,7 @@ function TransactionsDetail() {
                     <Grid item xs={12} md={4}>
                         <WatchListColumn
                             currentValue={unitDetailCurrent?.appPower}
-                            title='Apparent Power (kVA)'
+                            title='Apparent Power (VA)'
                             x={unitDetail.map(detail => detail.timestamp).flat()}
                             y={unitDetail.map(detail => detail.appPower).flat()}
                         />
@@ -100,7 +100,7 @@ function TransactionsDetail() {
                     <Grid item xs={12} md={4}>
                         <WatchListColumn
                             currentValue={unitDetailCurrent?.reactEn}
-                            title='Reactive Energy (kVARh)'
+                            title='Reactive Energy (VARh)'
                             x={unitDetail.map(detail => detail.timestamp).flat()}
                             y={unitDetail.map(detail => detail.reactEn).flat()}
                         />
@@ -108,7 +108,7 @@ function TransactionsDetail() {
                     <Grid item xs={12} md={4}>
                         <WatchListColumn
                             currentValue={unitDetailCurrent?.reactPower}
-                            title='Reactive Power (kVAR)'
+                            title='Reactive Power (VAR)'
                             x={unitDetail.map(detail => detail.timestamp).flat()}
                             y={unitDetail.map(detail => detail.reactPower).flat()}
                         />
