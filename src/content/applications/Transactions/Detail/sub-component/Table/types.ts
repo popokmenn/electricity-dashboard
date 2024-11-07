@@ -1,6 +1,7 @@
 export interface EnergyData {
     volt: number;
     current: number;
+    PF: number;
     actEn: number;
     reactEn: number;
     appEn: number;

@@ -22,8 +22,6 @@ const useSensorData = () => {
             if (sensordata) {
                 setUnitDetail(sensordata);
             }
-
-            console.log(unitDetail, dataDetail?.deviceId);
         } catch (error) {
             console.error('Unexpected error fetching sensor data:', error);
         }

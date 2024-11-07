@@ -82,6 +82,9 @@ function TransactionsDetail() {
                     <Grid item xs={12} md={3}>
                         <InfoCard value={unitDetailCurrent?.freq} previousValue={unitDetailPrevious?.freq} label='Frequency (Hz)' />
                     </Grid>
+                    <Grid item xs={12} md={3}>
+                        <InfoCard value={unitDetailCurrent?.PF} previousValue={unitDetailPrevious?.PF} label='Power Factor (%)' />
+                    </Grid>
                 </Grid>
                 <Typography variant="h4">History Data</Typography>
                 <Grid container spacing={3} py={2}>
@@ -153,7 +156,14 @@ function TransactionsDetail() {
                             y={unitDetail.map(detail => detail.current).flat()}
                         />
                     </Grid >
-
+                    <Grid item xs={12} md={4}>
+                        <WatchListColumn
+                            currentValue={unitDetailCurrent?.current}
+                            title='Power Factor (%)'
+                            x={unitDetail.map(detail => detail.timestamp).flat()}
+                            y={unitDetail.map(detail => detail.PF).flat()}
+                        />
+                    </Grid >
                 </Grid>
             </Container>
         </>

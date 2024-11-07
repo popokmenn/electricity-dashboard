@@ -140,7 +140,7 @@ function WatchListColumn({ title, x = [], y = [], currentValue = 0 }: WatchListC
                   mb: 1
                 }}
               >
-                {currentValue}
+                {currentValue ? currentValue : 'N/A'}
               </Typography>
               <Text color={currentValue - y[0] < 0 ? 'error' : 'success'}>
                 <b>{y[0] ? `${((currentValue - y[0]) / y[0] * 100).toFixed(2)}%` : ' '}</b>

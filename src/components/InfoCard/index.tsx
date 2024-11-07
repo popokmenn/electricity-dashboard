@@ -21,7 +21,7 @@ function InfoCard({ label, value, previousValue }: { label: string, value: numbe
             <CardHeader title={label} />
             <Box p={4} pt={2}>
                 <Typography variant="h1" gutterBottom>
-                    {value}
+                    {value ? value : 'N/A'}
                 </Typography>
                 <Box alignItems="center" display="flex">
                     <AvatarSuccess

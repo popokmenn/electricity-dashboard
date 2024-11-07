@@ -8,6 +8,8 @@ const useSummary = () => {
     const [averageVoltPrev, setAverageVoltPrev] = useState<number>(averageVolt);
     const [averageFreq, setAverageFreq] = useState<number>(0);
     const [averageFreqPrev, setAverageFreqPrev] = useState<number>(averageFreq);
+    const [averagePF, setAveragePF] = useState<number>(0);
+    const [averagePFPrev, setAveragePFPrev] = useState<number>(averagePF);
     const [totalKwhAllUnitList, setTotalKwhAllUnitList] = useState<EnergyData[]>([]);
     const [summaryPowerEnergyAllUnitList, setSummaryPowerEnergyAllUnitList] = useState<EnergyData[]>([]);
     const [summaryPowerEnergyAllUnitListPrev, setSummaryPowerEnergyAllUnitListPrev] = useState<EnergyData[]>(summaryPowerEnergyAllUnitList);
@@ -15,6 +17,7 @@ const useSummary = () => {
     let summaryPrev = []
     let avgVoltPrev = []
     let avgFreqPrev = []
+    let avgPFPrev = []
 
     const fetchTotalKwhAllUnit = async () => {
         try {
@@ -74,7 +77,7 @@ const useSummary = () => {
                 .select('*')
 
             if (error) {
-                console.error('Error fetching fetchSummaryPowerEnergyAllUnit data:', error.message);
+                console.error('Error fetching fetchAverageVolt data:', error.message);
                 return;
             }
 
@@ -104,7 +107,7 @@ const useSummary = () => {
                 .select('*')
 
             if (error) {
-                console.error('Error fetching fetchSummaryPowerEnergyAllUnit data:', error.message);
+                console.error('Error fetching fetchAverageFreq data:', error.message);
                 return;
             }
 
@@ -120,6 +123,36 @@ const useSummary = () => {
                 setAverageFreqPrev((avgFreqPrev[0].reduce((acc, curr) => acc + curr.averagefreq, 0) / averageFreqResult.length).toFixed(2));
                 //@ts-ignore
                 setAverageFreq((averageFreqResult.reduce((acc, curr) => acc + curr.averagefreq, 0) / averageFreqResult.length).toFixed(2));
+            }
+
+        } catch (error) {
+            console.error('Unexpected error fetching sensor data:', error);
+        }
+    };
+
+    const fetchAveragePF = async () => {
+        try {
+
+            const { data: averagePFResult, error } = await supabase
+                .from('v_averagepowerfactor')
+                .select('*')
+
+            if (error) {
+                console.error('Error fetching fetchAveragePF data:', error.message);
+                return;
+            }
+
+            if (averagePFResult) {
+                if (avgPFPrev.length < 2) {
+                    avgPFPrev.push(averagePFResult);
+                } else {
+                    avgPFPrev.shift();
+                    avgPFPrev.push(averagePFResult);
+                }
+                //@ts-ignore
+                setAveragePFPrev((avgPFPrev[0].reduce((acc, curr) => acc + curr.averagepf, 0) / averagePFResult.length).toFixed(2));
+                //@ts-ignore
+                setAveragePF((averagePFResult.reduce((acc, curr) => acc + curr.averagepf, 0) / averagePFResult.length).toFixed(2));
             }
 
         } catch (error) {
@@ -151,8 +184,10 @@ const useSummary = () => {
 
     return {
         data: {
+            averagePF,
             averageVolt,
             averageFreq,
+            averagePFPrev,
             averageVoltPrev,
             averageFreqPrev,
             totalKwhAllUnit,
@@ -162,6 +197,7 @@ const useSummary = () => {
         },
         method:
         {
+            fetchAveragePF,
             fetchAverageVolt,
             fetchAverageFreq,
             fetchTotalKwhAllUnit,

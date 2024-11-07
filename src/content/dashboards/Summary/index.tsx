@@ -2,8 +2,6 @@ import Footer from 'src/components/Footer';
 import { Helmet } from 'react-helmet-async';
 import { Container, Grid, Typography } from '@mui/material';
 
-import Rank from './sub-component/Rank';
-
 import { useEffect } from 'react';
 import { useSummary } from './hooks';
 import InfoCard from 'src/components/InfoCard';
@@ -13,27 +11,29 @@ function DashboardCrypto() {
   const
     {
       data: {
-        averageVoltPrev,
-        averageFreqPrev,
+        averagePF,
         averageVolt,
         averageFreq,
+        averageVoltPrev,
+        averageFreqPrev,
+        averagePFPrev,
         summaryPowerEnergyAllUnitList,
         summaryPowerEnergyAllUnitListPrev,
       },
       method:
       {
+        fetchAveragePF,
         fetchAverageVolt,
         fetchAverageFreq,
         fetchSummaryPowerEnergyAllUnit,
-        // subscribeSensorData
       }
     } = useSummary();
 
   const fetchAPI = () => {
     fetchAverageVolt();
     fetchAverageFreq();
+    fetchAveragePF();
     fetchSummaryPowerEnergyAllUnit();
-    // subscribeSensorData();
   }
 
   useEffect(() => {
@@ -112,22 +112,28 @@ function DashboardCrypto() {
           <Grid item lg={12} xs={12}>
             <Typography variant="h3">Average</Typography>
             <Grid item pt={2} sx={{ display: 'flex', gap: 4, justifyContent: 'start' }}>
-              <Grid item lg={6} xs={12}>
+              <Grid item lg={4} xs={12}>
                 <InfoCard label="Voltage (V) " value={averageVolt} previousValue={averageVoltPrev} />
               </Grid>
-              <Grid item lg={6} xs={12}>
+              <Grid item lg={4} xs={12}>
                 <InfoCard label="Frequency (Hz) " value={averageFreq} previousValue={averageFreqPrev} />
               </Grid>
+              <Grid item lg={4} xs={12}>
+                <InfoCard label="Power Factor (%) " value={averagePF} previousValue={averagePFPrev} />
+              </Grid>
+            </Grid>
+            <Grid item pt={2} sx={{ display: 'flex', gap: 4, justifyContent: 'start' }}>
+
             </Grid>
           </Grid>
-          <Grid item lg={6} xs={12}>
+          {/* <Grid item lg={6} xs={12}>
             <Typography pb={2} variant="h3">Highest Usage</Typography>
             <Rank />
           </Grid>
           <Grid item lg={6} xs={12}>
             <Typography pb={2} variant="h3">Lowest Usage</Typography>
             <Rank />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
       <Footer />
