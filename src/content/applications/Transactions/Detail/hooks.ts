@@ -10,7 +10,9 @@ const useSensorData = () => {
             let { data: sensordata, error } = await supabase
                 .from('sensordata')
                 .select('*')
-                .eq('serialNum', dataDetail?.deviceId);
+                .eq('serialNum', dataDetail?.deviceId)
+                .order('timestamp', { ascending: false })
+                .limit(100);
 
             if (error) {
                 console.error('Error fetching sensor data:', error.message);

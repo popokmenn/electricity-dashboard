@@ -5,16 +5,23 @@ import { Container, Grid, Typography } from '@mui/material';
 
 import { useSensorData } from './hooks';
 import { units } from '../sub-component/data';
-import WatchList from './sub-component/WatchList';
 import PageHeader from './sub-component/PageHeader';
 import { EnergyData } from './sub-component/Table/types';
 import WatchListColumn from './sub-component/WatchListColumn';
 
 import { Unit } from 'src/models/crypto_order';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
+import InfoCard from 'src/components/InfoCard';
 
 function TransactionsDetail() {
-    const { data: { unitDetail }, method: { fetchSensorData } } = useSensorData();
+    const {
+        data: {
+            unitDetail
+        },
+        method: {
+            fetchSensorData,
+        }
+    } = useSensorData();
 
     const [unitDetailPrevious, setUnitDetailPrevious] = useState<EnergyData>();
     const [unitDetailCurrent, setUnitDetailCurrent] = useState<EnergyData>();
@@ -26,6 +33,13 @@ function TransactionsDetail() {
 
     useEffect(() => {
         fetchSensorData(dataDetail);
+    }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            fetchSensorData(dataDetail);
+        }, 60000);
+        return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
@@ -46,27 +60,27 @@ function TransactionsDetail() {
                 <Typography variant="h4">Current Data</Typography>
                 <Grid container spacing={3} py={2}>
                     <Grid item xs={12} md={3}>
-                        <WatchList value={unitDetailCurrent?.volt} previousValue={unitDetailPrevious?.volt} label='Voltage (V)' />
+                        <InfoCard value={unitDetailCurrent?.volt} previousValue={unitDetailPrevious?.volt} label='Voltage (V)' />
                     </Grid>
                     <Grid item xs={12} md={3}>
-                        <WatchList value={unitDetailCurrent?.current} previousValue={unitDetailPrevious?.current} label='Current (A)' />
+                        <InfoCard value={unitDetailCurrent?.current} previousValue={unitDetailPrevious?.current} label='Current (A)' />
                     </Grid>
                     <Grid item xs={12} md={3}>
-                        <WatchList value={unitDetailCurrent?.actEn} previousValue={unitDetailPrevious?.actEn} label='Active Energy (Wh)' />
+                        <InfoCard value={unitDetailCurrent?.actEn} previousValue={unitDetailPrevious?.actEn} label='Active Energy (Wh)' />
                     </Grid>
                     <Grid item xs={12} md={3}>
-                        <WatchList value={unitDetailCurrent?.reactEn} previousValue={unitDetailPrevious?.reactEn} label='Reactive Energy (VARh)' />
+                        <InfoCard value={unitDetailCurrent?.reactEn} previousValue={unitDetailPrevious?.reactEn} label='Reactive Energy (VARh)' />
                     </Grid>
                 </Grid>
                 <Grid container spacing={3} pb={4}>
                     <Grid item xs={12} md={3}>
-                        <WatchList value={unitDetailCurrent?.actPower} previousValue={unitDetailPrevious?.actPower} label='Active Power (W)' />
+                        <InfoCard value={unitDetailCurrent?.actPower} previousValue={unitDetailPrevious?.actPower} label='Active Power (W)' />
                     </Grid>
                     <Grid item xs={12} md={3}>
-                        <WatchList value={unitDetailCurrent?.appPower} previousValue={unitDetailPrevious?.appPower} label='Apparent Power (VA)' />
+                        <InfoCard value={unitDetailCurrent?.appPower} previousValue={unitDetailPrevious?.appPower} label='Apparent Power (VA)' />
                     </Grid>
                     <Grid item xs={12} md={3}>
-                        <WatchList value={unitDetailCurrent?.freq} previousValue={unitDetailPrevious?.freq} label='Frequency (Hz)' />
+                        <InfoCard value={unitDetailCurrent?.freq} previousValue={unitDetailPrevious?.freq} label='Frequency (Hz)' />
                     </Grid>
                 </Grid>
                 <Typography variant="h4">History Data</Typography>

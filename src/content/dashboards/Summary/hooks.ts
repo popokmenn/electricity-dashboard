@@ -5,26 +5,29 @@ import { EnergyData } from "src/content/applications/Transactions/Detail/sub-com
 const useSummary = () => {
     const [totalKwhAllUnit, setTotalKwhAllUnit] = useState<number>(0);
     const [averageVolt, setAverageVolt] = useState<number>(0);
-    const [averageFreq, setAverageFreq] = useState<number>(0);
+    const [averageVoltPrev, setAverageVoltPrev] = useState<number>(0);
+    const [averageFreq, setAverageFreq] = useState<number>(null);
+    const [averageFreqPrev, setAverageFreqPrev] = useState<number>(0);
     const [totalKwhAllUnitList, setTotalKwhAllUnitList] = useState<EnergyData[]>([]);
     const [summaryPowerEnergyAllUnitList, setSummaryPowerEnergyAllUnitList] = useState<EnergyData[]>([]);
+    const [summaryPowerEnergyAllUnitListPrev, setSummaryPowerEnergyAllUnitListPrev] = useState<EnergyData[]>([]);
 
     const fetchTotalKwhAllUnit = async () => {
         try {
-                        
-            const { data: totalKwh, error } = await supabase
+
+            const { data: totalKwhResult, error } = await supabase
                 .from('v_latestactiveenergy')
                 .select('*')
-        
+
 
             if (error) {
                 console.error('Error fetching fetchTotalKwhAllUnit data:', error.message);
                 return;
             }
 
-            if (totalKwh) {
-                setTotalKwhAllUnitList(totalKwh);
-                setTotalKwhAllUnit(totalKwh.reduce((acc, curr) => acc + curr.actEn, 0));
+            if (totalKwhResult) {
+                setTotalKwhAllUnitList(totalKwhResult);
+                setTotalKwhAllUnit(totalKwhResult.reduce((acc, curr) => acc + curr.actEn, 0));
             }
 
         } catch (error) {
@@ -34,8 +37,7 @@ const useSummary = () => {
 
     const fetchSummaryPowerEnergyAllUnit = async () => {
         try {
-                        
-            const { data: summaryPowerEnergyAllUnit, error } = await supabase
+            const { data: summaryPowerEnergyAllUnitResult, error } = await supabase
                 .from('v_sensordatasummary')
                 .select('*')
 
@@ -44,8 +46,12 @@ const useSummary = () => {
                 return;
             }
 
-            if (summaryPowerEnergyAllUnit) {
-                setSummaryPowerEnergyAllUnitList(summaryPowerEnergyAllUnit);
+            if (summaryPowerEnergyAllUnitResult) {
+                if (summaryPowerEnergyAllUnitList) {
+                    setSummaryPowerEnergyAllUnitListPrev(summaryPowerEnergyAllUnitList);
+                }
+
+                setSummaryPowerEnergyAllUnitList(summaryPowerEnergyAllUnitResult);
             }
 
         } catch (error) {
@@ -55,8 +61,12 @@ const useSummary = () => {
 
     const fetchAverageVolt = async () => {
         try {
-                        
-            const { data: averageVolt, error } = await supabase
+
+            // if (averageVolt) {
+            //     setAverageVoltPrev(averageVolt);
+            // }
+
+            const { data: averageVoltResult, error } = await supabase
                 .from('v_averagevoltage')
                 .select('*')
 
@@ -65,9 +75,12 @@ const useSummary = () => {
                 return;
             }
 
-            if (averageVolt) {
+            if (averageVoltResult) {
+                if (averageVolt) {
+                    setAverageVoltPrev(averageVolt);
+                }
                 //@ts-ignore
-                setAverageVolt((averageVolt.reduce((acc, curr) => acc + curr.averagevoltage, 0) / averageVolt.length).toFixed(2));
+                setAverageVolt((averageVoltResult.reduce((acc, curr) => acc + curr.averagevoltage, 0) / averageVoltResult.length).toFixed(2));
             }
 
         } catch (error) {
@@ -77,8 +90,13 @@ const useSummary = () => {
 
     const fetchAverageFreq = async () => {
         try {
-                        
-            const { data: averageFreq, error } = await supabase
+
+            // if (averageFreq) {
+            //     console.log('averageFreq', averageFreq);
+            //     setAverageFreqPrev(averageFreq);
+            // }
+
+            const { data: averageFreqResult, error } = await supabase
                 .from('v_averagefrequency')
                 .select('*')
 
@@ -87,9 +105,12 @@ const useSummary = () => {
                 return;
             }
 
-            if (averageFreq) {
+            if (averageFreqResult) {
+                if (averageFreq) {
+                    setAverageFreqPrev(averageFreq);
+                }
                 //@ts-ignore
-                setAverageFreq((averageFreq.reduce((acc, curr) => acc + curr.averagefreq, 0) / averageFreq.length).toFixed(2));
+                setAverageFreq((averageFreqResult.reduce((acc, curr) => acc + curr.averagefreq, 0) / averageFreqResult.length).toFixed(2));
             }
 
         } catch (error) {
@@ -97,20 +118,46 @@ const useSummary = () => {
         }
     };
 
-    return { 
+    const subscribeSensorData = async () => {
+        try {
+            const sensordata = supabase.channel('custom-insert-channel')
+                .on(
+                    'postgres_changes',
+                    { event: 'INSERT', schema: 'public', table: 'sensordata' },
+                    (payload) => {
+                        console.log('Change received!', payload)
+                        fetchSummaryPowerEnergyAllUnit();
+                        fetchAverageVolt();
+                        fetchAverageFreq();
+                    }
+                )
+                .subscribe()
+
+            console.log('sensordata', sensordata);
+
+        } catch (error) {
+            console.error('Unexpected error fetching sensor data:', error);
+        }
+    };
+
+    return {
         data: {
             averageVolt,
             averageFreq,
+            averageVoltPrev,
+            averageFreqPrev,
             totalKwhAllUnit,
             totalKwhAllUnitList,
             summaryPowerEnergyAllUnitList,
+            summaryPowerEnergyAllUnitListPrev,
         },
-        method: 
-        { 
+        method:
+        {
             fetchAverageVolt,
             fetchAverageFreq,
-            fetchTotalKwhAllUnit, 
-            fetchSummaryPowerEnergyAllUnit, 
+            subscribeSensorData,
+            fetchTotalKwhAllUnit,
+            fetchSummaryPowerEnergyAllUnit,
         }
     };
 }
