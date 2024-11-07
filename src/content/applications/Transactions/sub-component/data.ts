@@ -7,5 +7,12 @@ export const units: Unit[] = [
       unit: 'Taman Anggrek',
       deviceId: '45610294827',
       deviceName: 'Modem 1',
+    },
+    {
+      id: '2',
+      building: 'Gedung 1',
+      unit: 'Taman Anggrek',
+      deviceId: '45610294848',
+      deviceName: 'Modem 2',
     }
   ];

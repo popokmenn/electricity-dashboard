@@ -6,7 +6,6 @@ import CustomTable from 'src/components/Table';
 import { columns } from './column';
 
 function ChartColumn({ unit }) {
-    console.log(unit);
     return (
         <Grid
             container
