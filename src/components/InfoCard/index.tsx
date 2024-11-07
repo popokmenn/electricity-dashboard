@@ -7,7 +7,6 @@ import {
     Typography,
     CardHeader,
 } from '@mui/material';
-import { useMemo } from 'react';
 
 function InfoCard({ label, value, previousValue }: { label: string, value: number, previousValue: number }) {
     const AvatarSuccess = styled(Avatar)(
@@ -17,24 +16,6 @@ function InfoCard({ label, value, previousValue }: { label: string, value: numbe
         height: ${theme.spacing(8)};
   `
     );
-
-    const avatarStyles = useMemo(() => ({
-        backgroundColor: value - previousValue < 0 ? '#FF0000' : value - previousValue > 0 ? '#008000' : '#808080',
-        boxShadow: value - previousValue < 0 ? '#FF0000' : value - previousValue > 0 ? '#008000' : '#808080'
-    }), [value, previousValue]);
-
-    const icon = useMemo(() => {
-        if (value - previousValue < 0) return <TrendingDown fontSize="small" />;
-        if (value - previousValue > 0) return <TrendingUp fontSize="small" />;
-        return <TrendingFlat fontSize="small" />;
-    }, [value, previousValue]);
-
-    const differenceText = useMemo(() => {
-        if (isNaN(value) || isNaN(previousValue)) return 'Nan';
-        const difference = value - previousValue;
-        return difference < 0 ? `- ${Math.abs(difference).toFixed(2)}` : `+ ${difference.toFixed(2)}`;
-    }, [value, previousValue]);
-
     return (
         <Card>
             <CardHeader title={label} />
@@ -48,14 +29,15 @@ function InfoCard({ label, value, previousValue }: { label: string, value: numbe
                             mr: 2,
                             width: 30,
                             height: 30,
-                            ...avatarStyles
+                            backgroundColor: value - previousValue < 0 ? '#FF0000' : value - previousValue > 0 ? '#008000' : '#808080',
+                            boxShadow: value - previousValue < 0 ? '#FF0000' : value - previousValue > 0 ? '#008000' : '#808080'
                         }}
                         variant="rounded"
                     >
-                        {icon}
+                        {value - previousValue < 0 ? <TrendingDown fontSize="small" /> : value - previousValue > 0 ? <TrendingUp fontSize="small" /> : <TrendingFlat fontSize="small" />}
                     </AvatarSuccess>
                     <div>
-                        <Typography variant="h4">{differenceText}</Typography>
+                        <Typography variant="h4">{isNaN(value) || isNaN(previousValue) ? 'Nan' : value - previousValue < 0 ? `- ${Math.abs(value - previousValue).toFixed(2)}` : `+ ${(value - previousValue).toFixed(2)}`}</Typography>
                         <Typography variant="subtitle2" noWrap>
                             Previous Data: {previousValue}
                         </Typography>

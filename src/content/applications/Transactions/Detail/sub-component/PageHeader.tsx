@@ -1,7 +1,7 @@
 import { Typography, Button, Grid } from '@mui/material';
 import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
 
-function PageHeader() {
+function PageHeader({ serialNumber }: { serialNumber: string }) {
   return (
     <Grid container justifyContent="space-between" alignItems="center">
       <Grid item>
@@ -9,7 +9,7 @@ function PageHeader() {
           Usage Detail
         </Typography>
         <Typography variant="subtitle2">
-          Detail usage of units
+          Serial Number: {serialNumber}
         </Typography>
       </Grid>
       <Grid item>

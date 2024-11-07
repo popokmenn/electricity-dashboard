@@ -5,12 +5,16 @@ import { EnergyData } from "src/content/applications/Transactions/Detail/sub-com
 const useSummary = () => {
     const [totalKwhAllUnit, setTotalKwhAllUnit] = useState<number>(0);
     const [averageVolt, setAverageVolt] = useState<number>(0);
-    const [averageVoltPrev, setAverageVoltPrev] = useState<number>(0);
-    const [averageFreq, setAverageFreq] = useState<number>(null);
-    const [averageFreqPrev, setAverageFreqPrev] = useState<number>(0);
+    const [averageVoltPrev, setAverageVoltPrev] = useState<number>(averageVolt);
+    const [averageFreq, setAverageFreq] = useState<number>(0);
+    const [averageFreqPrev, setAverageFreqPrev] = useState<number>(averageFreq);
     const [totalKwhAllUnitList, setTotalKwhAllUnitList] = useState<EnergyData[]>([]);
     const [summaryPowerEnergyAllUnitList, setSummaryPowerEnergyAllUnitList] = useState<EnergyData[]>([]);
-    const [summaryPowerEnergyAllUnitListPrev, setSummaryPowerEnergyAllUnitListPrev] = useState<EnergyData[]>([]);
+    const [summaryPowerEnergyAllUnitListPrev, setSummaryPowerEnergyAllUnitListPrev] = useState<EnergyData[]>(summaryPowerEnergyAllUnitList);
+
+    let summaryPrev = []
+    let avgVoltPrev = []
+    let avgFreqPrev = []
 
     const fetchTotalKwhAllUnit = async () => {
         try {
@@ -47,10 +51,13 @@ const useSummary = () => {
             }
 
             if (summaryPowerEnergyAllUnitResult) {
-                if (summaryPowerEnergyAllUnitList) {
-                    setSummaryPowerEnergyAllUnitListPrev(summaryPowerEnergyAllUnitList);
+                if (summaryPrev.length < 2) {
+                    summaryPrev.push(summaryPowerEnergyAllUnitResult);
+                } else {
+                    summaryPrev.shift();
+                    summaryPrev.push(summaryPowerEnergyAllUnitResult);
                 }
-
+                setSummaryPowerEnergyAllUnitListPrev(summaryPrev[0]);
                 setSummaryPowerEnergyAllUnitList(summaryPowerEnergyAllUnitResult);
             }
 
@@ -62,10 +69,6 @@ const useSummary = () => {
     const fetchAverageVolt = async () => {
         try {
 
-            // if (averageVolt) {
-            //     setAverageVoltPrev(averageVolt);
-            // }
-
             const { data: averageVoltResult, error } = await supabase
                 .from('v_averagevoltage')
                 .select('*')
@@ -76,9 +79,14 @@ const useSummary = () => {
             }
 
             if (averageVoltResult) {
-                if (averageVolt) {
-                    setAverageVoltPrev(averageVolt);
+                if (avgVoltPrev.length < 2) {
+                    avgVoltPrev.push(averageVoltResult);
+                } else {
+                    avgVoltPrev.shift();
+                    avgVoltPrev.push(averageVoltResult);
                 }
+                //@ts-ignore
+                setAverageVoltPrev((avgVoltPrev[0].reduce((acc, curr) => acc + curr.averagevoltage, 0) / averageVoltResult.length).toFixed(2));
                 //@ts-ignore
                 setAverageVolt((averageVoltResult.reduce((acc, curr) => acc + curr.averagevoltage, 0) / averageVoltResult.length).toFixed(2));
             }
@@ -91,11 +99,6 @@ const useSummary = () => {
     const fetchAverageFreq = async () => {
         try {
 
-            // if (averageFreq) {
-            //     console.log('averageFreq', averageFreq);
-            //     setAverageFreqPrev(averageFreq);
-            // }
-
             const { data: averageFreqResult, error } = await supabase
                 .from('v_averagefrequency')
                 .select('*')
@@ -106,9 +109,15 @@ const useSummary = () => {
             }
 
             if (averageFreqResult) {
-                if (averageFreq) {
-                    setAverageFreqPrev(averageFreq);
+
+                if (avgFreqPrev.length < 2) {
+                    avgFreqPrev.push(averageFreqResult);
+                } else {
+                    avgFreqPrev.shift();
+                    avgFreqPrev.push(averageFreqResult);
                 }
+                //@ts-ignore
+                setAverageFreqPrev((avgFreqPrev[0].reduce((acc, curr) => acc + curr.averagefreq, 0) / averageFreqResult.length).toFixed(2));
                 //@ts-ignore
                 setAverageFreq((averageFreqResult.reduce((acc, curr) => acc + curr.averagefreq, 0) / averageFreqResult.length).toFixed(2));
             }
@@ -118,27 +127,27 @@ const useSummary = () => {
         }
     };
 
-    const subscribeSensorData = async () => {
-        try {
-            const sensordata = supabase.channel('custom-insert-channel')
-                .on(
-                    'postgres_changes',
-                    { event: 'INSERT', schema: 'public', table: 'sensordata' },
-                    (payload) => {
-                        console.log('Change received!', payload)
-                        fetchSummaryPowerEnergyAllUnit();
-                        fetchAverageVolt();
-                        fetchAverageFreq();
-                    }
-                )
-                .subscribe()
+    // const subscribeSensorData = async () => {
+    //     try {
+    //         const sensordata = supabase.channel('custom-insert-channel')
+    //             .on(
+    //                 'postgres_changes',
+    //                 { event: 'INSERT', schema: 'public', table: 'sensordata' },
+    //                 (payload) => {
+    //                     console.log('Change received!', payload)
+    //                     fetchSummaryPowerEnergyAllUnit();
+    //                     fetchAverageVolt();
+    //                     fetchAverageFreq();
+    //                 }
+    //             )
+    //             .subscribe()
 
-            console.log('sensordata', sensordata);
+    //         console.log('sensordata', sensordata);
 
-        } catch (error) {
-            console.error('Unexpected error fetching sensor data:', error);
-        }
-    };
+    //     } catch (error) {
+    //         console.error('Unexpected error fetching sensor data:', error);
+    //     }
+    // };
 
     return {
         data: {
@@ -155,7 +164,6 @@ const useSummary = () => {
         {
             fetchAverageVolt,
             fetchAverageFreq,
-            subscribeSensorData,
             fetchTotalKwhAllUnit,
             fetchSummaryPowerEnergyAllUnit,
         }

@@ -53,7 +53,7 @@ function TransactionsDetail() {
                 <title>kWh Unit Detail</title>
             </Helmet>
             <PageTitleWrapper>
-                <PageHeader />
+                <PageHeader serialNumber={unitDetailCurrent?.serialNum || ''} />
             </PageTitleWrapper>
             <Container maxWidth="lg" sx={{ mt: 4 }}>
                 <Typography pb={2} variant="h6">Last Sync: {unitDetailCurrent?.timestamp}</Typography>
