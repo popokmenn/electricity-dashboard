@@ -160,6 +160,7 @@ const useSummary = () => {
         }
     };
 
+
     // const subscribeSensorData = async () => {
     //     try {
     //         const sensordata = supabase.channel('custom-insert-channel')

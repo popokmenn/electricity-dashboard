@@ -16,10 +16,14 @@ import InfoCard from 'src/components/InfoCard';
 function TransactionsDetail() {
     const {
         data: {
-            unitDetail
+            unitDetail,
+            billingData,
+            periodicProfile,
         },
         method: {
             fetchSensorData,
+            fetchBillingData,
+            fetchPeriodicProfile,
         }
     } = useSensorData();
 
@@ -33,11 +37,15 @@ function TransactionsDetail() {
 
     useEffect(() => {
         fetchSensorData(dataDetail);
+        fetchPeriodicProfile(dataDetail);
+        fetchBillingData(dataDetail);
     }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
             fetchSensorData(dataDetail);
+            fetchPeriodicProfile(dataDetail);
+            fetchBillingData(dataDetail);
         }, 60000);
         return () => clearInterval(interval);
     }, []);
@@ -53,11 +61,114 @@ function TransactionsDetail() {
                 <title>kWh Unit Detail</title>
             </Helmet>
             <PageTitleWrapper>
-                <PageHeader serialNumber={unitDetailCurrent?.serialNum || ''} />
+                <PageHeader serialNumber={unitDetailCurrent?.serialNum || ''} detail={dataDetail} />
             </PageTitleWrapper>
             <Container maxWidth="lg" sx={{ mt: 4 }}>
                 <Typography pb={2} variant="h6">Last Sync: {unitDetailCurrent?.timestamp}</Typography>
+
+                <Typography variant="h4">Billing Data</Typography>
+                <Grid container spacing={3} py={2}>
+                    <Grid item xs={12} md={3}>
+                        <InfoCard value={billingData[0]?.active_energy_pos_rate_0} previousValue={billingData[1]?.active_energy_pos_rate_0} label='Energi Aktif Ekspor (Wh)' />
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                        <InfoCard value={billingData[0]?.active_energy_neg_rate_0} previousValue={billingData[1]?.active_energy_neg_rate_0} label='Energi Aktif Impor (Wh)' />
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                        <InfoCard value={billingData[0]?.reactive_energy_pos_rate_0} previousValue={billingData[1]?.reactive_energy_pos_rate_0} label='Energi Reaktif Induktif (VARh)' />
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                        <InfoCard value={billingData[0]?.reactive_energy_neg_rate_0} previousValue={billingData[1]?.reactive_energy_neg_rate_0} label='Energi Reaktif Kapasitif (VARh)' />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={3} py={2}>
+                    <Grid item xs={12} md={3}>
+                        <InfoCard value={billingData[0]?.apparent_energy_pos_rate_0} previousValue={billingData[1]?.apparent_energy_pos_rate_0} label='Energi Semu Ekspor (Wh)' />
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                        <InfoCard value={billingData[0]?.apparent_energy_neg_rate_0} previousValue={billingData[1]?.apparent_energy_neg_rate_0} label='Energi Semu Impor (Wh)' />
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                        <InfoCard value={billingData[0]?.total_power_failures} previousValue={billingData[1]?.total_power_failures} label='Total Power Failures' />
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                        <InfoCard value={billingData[0]?.battery_voltage} previousValue={billingData[1]?.battery_voltage} label='Tegangan Baterai (V)' />
+                    </Grid>
+                </Grid>
+
+                <Typography variant="h4">Periodic Profile</Typography>
+                <Grid container spacing={3} py={2}>
+                    <Grid item xs={12} md={4}>
+                        <WatchListColumn
+                            currentValue={periodicProfile[periodicProfile.length - 1]?.voltage}
+                            title='Tegangan (V)'
+                            x={periodicProfile.map(profile => profile.timestamp)}
+                            y={periodicProfile.map(profile => profile.voltage)}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <WatchListColumn
+                            currentValue={periodicProfile[periodicProfile.length - 1]?.current}
+                            title='Arus (A)'
+                            x={periodicProfile.map(profile => profile.timestamp)}
+                            y={periodicProfile.map(profile => profile.current)}
+                        />
+                    </Grid >
+                    <Grid item xs={12} md={4}>
+                        <WatchListColumn
+                            currentValue={periodicProfile[periodicProfile.length - 1]?.power_factor}
+                            title='Faktor Daya (%)'
+                            x={periodicProfile.map(profile => profile.timestamp)}
+                            y={periodicProfile.map(profile => profile.power_factor)}
+                        />
+                    </Grid >
+                </Grid>
+                <Grid container spacing={3} py={2}>
+                    <Grid item xs={12} md={4}>
+                        <WatchListColumn
+                            currentValue={periodicProfile[periodicProfile.length - 1]?.active_energy_pos}
+                            title='Energi Aktif Ekspor (Wh)'
+                            x={periodicProfile.map(profile => profile.timestamp)}
+                            y={periodicProfile.map(profile => profile.active_energy_pos)}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <WatchListColumn
+                            currentValue={periodicProfile[periodicProfile.length - 1]?.active_energy_neg}
+                            title='Energi Aktif Impor (Wh)'
+                            x={periodicProfile.map(profile => profile.timestamp)}
+                            y={periodicProfile.map(profile => profile.active_energy_neg)}
+                        />
+                    </Grid >
+                    <Grid item xs={12} md={4}>
+                        <WatchListColumn
+                            currentValue={periodicProfile[periodicProfile.length - 1]?.reactive_energy_pos}
+                            title='Energi Reaktif Induktif (VARh)'
+                            x={periodicProfile.map(profile => profile.timestamp)}
+                            y={periodicProfile.map(profile => profile.reactive_energy_pos)}
+                        />
+                    </Grid >
+                </Grid>
+                <Grid container spacing={3} py={2}>
+                    <Grid item xs={12} md={4}>
+                        <WatchListColumn
+                            currentValue={periodicProfile[periodicProfile.length - 1]?.active_power_pos}
+                            title='Daya Aktif Ekspor (W)'
+                            x={periodicProfile.map(profile => profile.timestamp)}
+                            y={periodicProfile.map(profile => profile.active_power_pos)}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <WatchListColumn
+                            currentValue={periodicProfile[periodicProfile.length - 1]?.active_power_neg}
+                            title='Daya Aktif Impor (W)'
+                            x={periodicProfile.map(profile => profile.timestamp)}
+                            y={periodicProfile.map(profile => profile.active_power_neg)}
+                        />
+                    </Grid >
+                </Grid>
                 <Typography variant="h4">Current Data</Typography>
+
                 <Grid container spacing={3} py={2}>
                     <Grid item xs={12} md={3}>
                         <InfoCard value={unitDetailCurrent?.volt} previousValue={unitDetailPrevious?.volt} label='Voltage (V)' />
