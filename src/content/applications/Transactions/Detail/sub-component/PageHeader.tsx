@@ -1,58 +1,40 @@
-import { Typography, Button, Grid } from '@mui/material';
+import { Typography, Button, Grid, IconButton, Box, Tooltip } from '@mui/material';
 import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
-interface Detail {
-  building: string;
-  deviceId: string;
-  deviceName: string;
-  id: string;
-  unit: string;
-}
+import { Customer } from '../../types';
 
-function PageHeader({ serialNumber, detail }: { serialNumber: string, detail: Detail }) {
+import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
+import { useNavigate } from 'react-router';
+
+function PageHeader({ serialNumber, detail }: { serialNumber: string, detail: Customer }) {
+  const navigate = useNavigate();
+
   return (
     <Grid container justifyContent="space-between" alignItems="center">
       <Grid item>
-        <Typography variant="h3" component="h3" gutterBottom>
-          Usage Detail
-        </Typography>
-
-        <Grid container gap={10}>
+        <Grid display="flex">
+          <Box display="flex" mb={3}>
+            <Tooltip arrow placement="top" title="Go back">
+              <IconButton
+                color="primary"
+                sx={{ p: 2, mr: 2 }}
+                onClick={() => navigate(`/management/transactions`)}
+              >
+                <ArrowBackTwoToneIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
           <Grid item>
-            <Typography variant="subtitle2">
-              Serial Number: {serialNumber}
+            <Typography variant="h3" component="h3" gutterBottom>
+              KWh Unit
             </Typography>
-
             <Typography variant="subtitle2">
-              Unit: {detail.unit}
+              <strong>Serial Number: </strong>{serialNumber}
             </Typography>
-          </Grid>
-
-          <Grid item>
             <Typography variant="subtitle2">
-              Building: {detail.building}
-            </Typography>
-
-
-            <Typography variant="subtitle2">
-              Device Name: {detail.deviceName}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle2">
-              Unit: {detail.unit}
-            </Typography>
-
-
-            <Typography variant="subtitle2">
-              Device ID: {detail.deviceId}
+              <strong>Address: </strong>{detail?.address || ''}
             </Typography>
           </Grid>
         </Grid>
-
-
-
-
-
 
       </Grid>
       <Grid item>

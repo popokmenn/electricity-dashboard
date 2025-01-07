@@ -32,10 +32,11 @@ interface Column {
     field: string;
     type?: string; // Optional type for future use
     width?: number; // Optional width for the column
+    render?: (value: any, row: any) => JSX.Element; // New render property
 }
 
 interface NavigateActions {
-    onClickEdit?: (id: string) => void;
+    onClickEdit?: (id: string | number) => void;
     onClickDetails?: (id: string) => void;
     onClickSavePdf?: (id: string) => void;
     onClickDelete?: (id: string) => void;
@@ -227,7 +228,7 @@ const CustomTable: FC<CustomTableProps> = ({ title, data, columns, navigateActio
                                     </TableCell>
                                     {columns.map((column) => (
                                         <TableCell key={column.field}>
-                                            {row[column.field]}
+                                            {column.render ? column.render(row[column.field], row) : row[column.field]}
                                         </TableCell>
                                     ))}
                                     {!viewOnly && <TableCell align="right">

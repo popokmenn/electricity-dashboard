@@ -4,48 +4,60 @@ import { Helmet } from 'react-helmet-async';
 import { Container, Grid, Typography } from '@mui/material';
 
 import { useSensorData } from './hooks';
-import { units } from '../sub-component/data';
 import PageHeader from './sub-component/PageHeader';
 import { EnergyData } from './sub-component/Table/types';
 import WatchListColumn from './sub-component/WatchListColumn';
 
-import { Unit } from 'src/models/crypto_order';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import InfoCard from 'src/components/InfoCard';
+import { Customer } from '../types';
 
 function TransactionsDetail() {
     const {
         data: {
             unitDetail,
             billingData,
+            customerData,
             periodicProfile,
         },
         method: {
             fetchSensorData,
             fetchBillingData,
+            fetchCustomerById,
             fetchPeriodicProfile,
         }
     } = useSensorData();
 
     const [unitDetailPrevious, setUnitDetailPrevious] = useState<EnergyData>();
     const [unitDetailCurrent, setUnitDetailCurrent] = useState<EnergyData>();
+    const [dataDetail, setDataDetail] = useState<Customer>();
 
     const location = useLocation();
     //@ts-ignore
     const id = location.state?.id;
-    const dataDetail: Unit = units.find(unit => unit.id === id);
 
     useEffect(() => {
-        fetchSensorData(dataDetail);
-        fetchPeriodicProfile(dataDetail);
-        fetchBillingData(dataDetail);
+        fetchCustomerById(id);
     }, []);
 
     useEffect(() => {
+        if (customerData) {
+            setDataDetail(customerData);
+            if (customerData.serial_number) {
+                fetchSensorData(customerData);
+                fetchPeriodicProfile(customerData);
+                fetchBillingData(customerData);
+            }
+        }
+    }, [customerData]);
+
+    useEffect(() => {
         const interval = setInterval(() => {
-            fetchSensorData(dataDetail);
-            fetchPeriodicProfile(dataDetail);
-            fetchBillingData(dataDetail);
+            if (customerData?.serial_number) {
+                fetchSensorData(customerData);
+                fetchPeriodicProfile(customerData);
+                fetchBillingData(customerData);
+            }
         }, 60000);
         return () => clearInterval(interval);
     }, []);
@@ -196,85 +208,6 @@ function TransactionsDetail() {
                     <Grid item xs={12} md={3}>
                         <InfoCard value={unitDetailCurrent?.PF} previousValue={unitDetailPrevious?.PF} label='Power Factor (%)' />
                     </Grid>
-                </Grid>
-                <Typography variant="h4">History Data</Typography>
-                <Grid container spacing={3} py={2}>
-                    <Grid item xs={12} md={4}>
-                        <WatchListColumn
-                            currentValue={unitDetailCurrent?.actEn}
-                            title='Active Energy (Wh)'
-                            x={unitDetail.map(detail => detail.timestamp).flat()}
-                            y={unitDetail.map(detail => detail.actEn).flat()}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <WatchListColumn
-                            currentValue={unitDetailCurrent?.actPower}
-                            title='Active Power (W)'
-                            x={unitDetail.map(detail => detail.timestamp).flat()}
-                            y={unitDetail.map(detail => detail.actPower).flat()}
-                        />
-                    </Grid >
-                    <Grid item xs={12} md={4}>
-                        <WatchListColumn
-                            currentValue={unitDetailCurrent?.appPower}
-                            title='Apparent Power (VA)'
-                            x={unitDetail.map(detail => detail.timestamp).flat()}
-                            y={unitDetail.map(detail => detail.appPower).flat()}
-                        />
-                    </Grid >
-                </Grid>
-                <Grid container spacing={3} py={2}>
-                    <Grid item xs={12} md={4}>
-                        <WatchListColumn
-                            currentValue={unitDetailCurrent?.reactEn}
-                            title='Reactive Energy (VARh)'
-                            x={unitDetail.map(detail => detail.timestamp).flat()}
-                            y={unitDetail.map(detail => detail.reactEn).flat()}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <WatchListColumn
-                            currentValue={unitDetailCurrent?.reactPower}
-                            title='Reactive Power (VAR)'
-                            x={unitDetail.map(detail => detail.timestamp).flat()}
-                            y={unitDetail.map(detail => detail.reactPower).flat()}
-                        />
-                    </Grid >
-                    <Grid item xs={12} md={4}>
-                        <WatchListColumn
-                            currentValue={unitDetailCurrent?.freq}
-                            title='Frequency (Hz)'
-                            x={unitDetail.map(detail => detail.timestamp).flat()}
-                            y={unitDetail.map(detail => detail.freq).flat()}
-                        />
-                    </Grid >
-                </Grid>
-                <Grid container spacing={3} py={2}>
-                    <Grid item xs={12} md={4}>
-                        <WatchListColumn
-                            currentValue={unitDetailCurrent?.volt}
-                            title='Voltage (V)'
-                            x={unitDetail.map(detail => detail.timestamp).flat()}
-                            y={unitDetail.map(detail => detail.volt).flat()}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <WatchListColumn
-                            currentValue={unitDetailCurrent?.current}
-                            title='Current (A)'
-                            x={unitDetail.map(detail => detail.timestamp).flat()}
-                            y={unitDetail.map(detail => detail.current).flat()}
-                        />
-                    </Grid >
-                    <Grid item xs={12} md={4}>
-                        <WatchListColumn
-                            currentValue={unitDetailCurrent?.current}
-                            title='Power Factor (%)'
-                            x={unitDetail.map(detail => detail.timestamp).flat()}
-                            y={unitDetail.map(detail => detail.PF).flat()}
-                        />
-                    </Grid >
                 </Grid>
             </Container>
         </>
