@@ -1,6 +1,7 @@
 import { Typography, Button, Grid } from '@mui/material';
 
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
 
 function PageHeader({ setOpen }: { setOpen: (open: boolean) => void }) {
   return (
@@ -15,7 +16,15 @@ function PageHeader({ setOpen }: { setOpen: (open: boolean) => void }) {
           </Typography>
         </Grid>
       </Grid>
-      <Grid item>
+      <Grid item display="flex" gap={2}>
+        <Button
+          sx={{ mt: { xs: 2, md: 0 } }}
+          variant="contained"
+          color="success"
+          startIcon={<DescriptionTwoToneIcon fontSize="small" />}
+        >
+          Export to Excel
+        </Button>
         <Button
           sx={{ mt: { xs: 2, md: 0 } }}
           variant="contained"

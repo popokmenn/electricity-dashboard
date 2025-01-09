@@ -11,6 +11,8 @@ import WatchListColumn from './sub-component/WatchListColumn';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import InfoCard from 'src/components/InfoCard';
 import { Customer } from '../types';
+import moment from 'moment';
+import Billing from './sub-component/Billing';
 
 function TransactionsDetail() {
     const {
@@ -67,6 +69,7 @@ function TransactionsDetail() {
         setUnitDetailCurrent({ ...unitDetail[unitDetail.length - 1], timestamp: new Date().toLocaleString() });
     }, [unitDetail]);
 
+
     return (
         <>
             <Helmet>
@@ -76,9 +79,13 @@ function TransactionsDetail() {
                 <PageHeader serialNumber={unitDetailCurrent?.serialNum || ''} detail={dataDetail} />
             </PageTitleWrapper>
             <Container maxWidth="lg" sx={{ mt: 4 }}>
-                <Typography pb={2} variant="h6">Last Sync: {unitDetailCurrent?.timestamp}</Typography>
-
-                <Typography variant="h4">Billing Data</Typography>
+                <Grid container>
+                    <Grid item xs={12} md={6}>
+                        <Billing data={billingData} rate={customerData?.tariff} />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={3} py={4}></Grid>
+                <Typography variant="h4">Billing Data - {moment(billingData[0]?.time * 1000).format('DD MMMM YYYY HH:mm')}</Typography>
                 <Grid container spacing={3} py={2}>
                     <Grid item xs={12} md={3}>
                         <InfoCard value={billingData[0]?.active_energy_pos_rate_0} previousValue={billingData[1]?.active_energy_pos_rate_0} label='Energi Aktif Ekspor (Wh)' />
@@ -107,7 +114,8 @@ function TransactionsDetail() {
                         <InfoCard value={billingData[0]?.battery_voltage} previousValue={billingData[1]?.battery_voltage} label='Tegangan Baterai (V)' />
                     </Grid>
                 </Grid>
-
+                <Grid container spacing={3} py={4}></Grid>
+                <Typography pb={2} variant="h6">Last Sync: {unitDetailCurrent?.timestamp}</Typography>
                 <Typography variant="h4">Periodic Profile</Typography>
                 <Grid container spacing={3} py={2}>
                     <Grid item xs={12} md={4}>
@@ -178,9 +186,17 @@ function TransactionsDetail() {
                             y={periodicProfile.map(profile => profile.active_power_neg)}
                         />
                     </Grid >
+                    <Grid item xs={12} md={4}>
+                        <WatchListColumn
+                            currentValue={periodicProfile[periodicProfile.length - 1]?.reactive_energy_neg}
+                            title='Energi Reaktif Kapasitif (VARh)'
+                            x={periodicProfile.map(profile => profile.timestamp)}
+                            y={periodicProfile.map(profile => profile.reactive_energy_neg)}
+                        />
+                    </Grid >
                 </Grid>
+                <Grid container spacing={3} py={4}></Grid>
                 <Typography variant="h4">Current Data</Typography>
-
                 <Grid container spacing={3} py={2}>
                     <Grid item xs={12} md={3}>
                         <InfoCard value={unitDetailCurrent?.volt} previousValue={unitDetailPrevious?.volt} label='Voltage (V)' />

@@ -28,6 +28,9 @@ function PageHeader({ serialNumber, detail }: { serialNumber: string, detail: Cu
               KWh Unit
             </Typography>
             <Typography variant="subtitle2">
+              <strong>Name: </strong>{detail?.name || ''}
+            </Typography>
+            <Typography variant="subtitle2">
               <strong>Serial Number: </strong>{serialNumber}
             </Typography>
             <Typography variant="subtitle2">
@@ -37,7 +40,7 @@ function PageHeader({ serialNumber, detail }: { serialNumber: string, detail: Cu
         </Grid>
 
       </Grid>
-      <Grid item>
+      <Grid item display="flex" gap={2}>
         <Button
           sx={{ mt: { xs: 2, md: 0 } }}
           variant="contained"
@@ -45,6 +48,14 @@ function PageHeader({ serialNumber, detail }: { serialNumber: string, detail: Cu
           startIcon={<DescriptionTwoToneIcon fontSize="small" />}
         >
           Export to PDF
+        </Button>
+        <Button
+          sx={{ mt: { xs: 2, md: 0 } }}
+          variant="contained"
+          color="success"
+          startIcon={<DescriptionTwoToneIcon fontSize="small" />}
+        >
+          Export to Excel
         </Button>
       </Grid>
     </Grid>
