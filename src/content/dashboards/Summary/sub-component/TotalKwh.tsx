@@ -1,3 +1,12 @@
+
+import moment from 'moment';
+import Chart from 'react-apexcharts';
+import type { ApexOptions } from 'apexcharts';
+import TrendingUp from '@mui/icons-material/TrendingUp';
+
+import Text from 'src/components/Text';
+import { EnergyData } from 'src/content/applications/Transactions/Detail/types';
+
 import {
   Box,
   Grid,
@@ -12,12 +21,6 @@ import {
   Typography,
   ListItemText,
 } from '@mui/material';
-import TrendingUp from '@mui/icons-material/TrendingUp';
-import Text from 'src/components/Text';
-import Chart from 'react-apexcharts';
-import type { ApexOptions } from 'apexcharts';
-import { EnergyData } from 'src/content/applications/Transactions/Detail/sub-component/Table/types';
-import moment from 'moment';
 
 const AvatarSuccess = styled(Avatar)(
   ({ theme }) => `

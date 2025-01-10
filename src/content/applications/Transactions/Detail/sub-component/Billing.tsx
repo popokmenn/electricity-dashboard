@@ -8,7 +8,7 @@ import {
     Typography,
 } from '@mui/material';
 import TrendingUp from '@mui/icons-material/TrendingUp';
-import { Billing } from './Table/types';
+import { Billing } from '../types';
 import { formatToIDR } from 'src/util/formatter';
 
 const AvatarSuccess = styled(Avatar)(
@@ -42,7 +42,7 @@ function BillingCard({ data, rate }: BillingCardProps) {
                         </Typography>
                         <Box>
                             <Typography variant="h1" gutterBottom>
-                                {formatToIDR(data[0]?.active_energy_pos_rate_0 * rate)}
+                                {formatToIDR((data[0]?.active_energy_pos_rate_0 * rate) / 1000)}
                             </Typography>
                             <Box
                                 display="flex"
@@ -60,7 +60,7 @@ function BillingCard({ data, rate }: BillingCardProps) {
                                     <TrendingUp fontSize="large" />
                                 </AvatarSuccess>
                                 <Box>
-                                    <Typography variant="h4">+ $3,594.00</Typography>
+                                    <Typography variant="h4">+ {formatToIDR((data[0]?.active_energy_pos_rate_0 * rate) / 1000)}</Typography>
                                     <Typography variant="subtitle2" noWrap>
                                         this month
                                     </Typography>

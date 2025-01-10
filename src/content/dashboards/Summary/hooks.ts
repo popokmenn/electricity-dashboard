@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { supabase } from "src/util/supabase-client";
-import { EnergyData } from "src/content/applications/Transactions/Detail/sub-component/Table/types";
+import { EnergyData } from "src/content/applications/Transactions/Detail/types";
 
 const useSummary = () => {
     const [totalKwhAllUnit, setTotalKwhAllUnit] = useState<number>(0);

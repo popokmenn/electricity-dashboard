@@ -42,6 +42,7 @@ export interface PeriodicProfile {
     time: number;
     voltage: number;
     timestamp: string;
+    alarm_register_translated?: string[];
 }
 
 export interface Billing {

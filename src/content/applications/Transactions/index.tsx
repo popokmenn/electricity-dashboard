@@ -1,26 +1,31 @@
-import Footer from 'src/components/Footer';
 import { Helmet } from 'react-helmet-async';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+
+import Footer from 'src/components/Footer';
+import CustomTable from 'src/components/Table';
+import PageHeader from 'src/components/PageHeader';
+import PageTitleWrapper from 'src/components/PageTitleWrapper';
+import ResponseAlert from 'src/components/Alert/responseAlert';
+
+import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
+
+import { useUnitData } from './hooks';
 
 import {
   Grid,
   Card,
   Dialog,
   Button,
+  MenuItem,
   Container,
   TextField,
   Typography,
   DialogTitle,
   DialogContent,
-  MenuItem,
 } from '@mui/material';
-
-import { useUnitData } from './hooks';
-import { useEffect, useState } from 'react';
-import CustomTable from 'src/components/Table';
-import PageHeader from './sub-component/PageHeader';
-import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import ResponseAlert from 'src/components/Alert/responseAlert';
 
 function ApplicationsTransactions() {
   const navigate = useNavigate();
@@ -55,7 +60,24 @@ function ApplicationsTransactions() {
         <title>kWh Unit</title>
       </Helmet>
       <PageTitleWrapper>
-        <PageHeader setOpen={setOpen} />
+        <PageHeader title="kWh Unit" subtitle="Detail usage of all units" >
+          <Button
+            sx={{ mt: { xs: 2, md: 0 } }}
+            variant="contained"
+            color="success"
+            startIcon={<DescriptionTwoToneIcon fontSize="small" />}
+          >
+            Export to Excel
+          </Button>
+          <Button
+            sx={{ mt: { xs: 2, md: 0 } }}
+            variant="contained"
+            startIcon={<AddTwoToneIcon fontSize="small" />}
+            onClick={() => setOpen(true)}
+          >
+            Create unit
+          </Button>
+        </PageHeader>
       </PageTitleWrapper>
       <ResponseAlert open={isError.isError} onClose={() => { setOpen(false) }} type="error" message={isError.message} />
       <ResponseAlert open={isSuccess.isSuccess} onClose={() => { setOpen(false) }} type="success" message={isSuccess.message} />

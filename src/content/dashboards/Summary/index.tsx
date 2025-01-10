@@ -73,19 +73,25 @@ function DashboardCrypto() {
             <Typography variant="h3">Energy</Typography>
             <Grid item pt={2} sx={{ display: 'flex', gap: 4, justifyContent: 'start' }}>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Active Energy All Unit (Wh) "
+                <InfoCard
+                  label="Active Energy All Unit (Wh) "
                   value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.actEn, 0)}
-                  previousValue={summaryPowerEnergyAllUnitListPrev.reduce((acc, curr) => acc + curr.actEn, 0)} />
+                  previousValue={summaryPowerEnergyAllUnitListPrev.reduce((acc, curr) => acc + curr.actEn, 0)}
+                  loading={false} />
               </Grid>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Apparent Energy All Unit (VAh) "
+                <InfoCard
+                  label="Apparent Energy All Unit (VAh) "
                   value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.appEn, 0)}
-                  previousValue={summaryPowerEnergyAllUnitListPrev.reduce((acc, curr) => acc + curr.appEn, 0)} />
+                  previousValue={summaryPowerEnergyAllUnitListPrev.reduce((acc, curr) => acc + curr.appEn, 0)}
+                  loading={false} />
               </Grid>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Reactive Energy All Unit (VARh) "
+                <InfoCard
+                  label="Reactive Energy All Unit (VARh) "
                   value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.reactEn, 0)}
-                  previousValue={summaryPowerEnergyAllUnitListPrev.reduce((acc, curr) => acc + curr.reactEn, 0)} />
+                  previousValue={summaryPowerEnergyAllUnitListPrev.reduce((acc, curr) => acc + curr.reactEn, 0)}
+                  loading={false} />
               </Grid>
             </Grid>
           </Grid>
@@ -93,19 +99,25 @@ function DashboardCrypto() {
             <Typography variant="h3">Power</Typography>
             <Grid item pt={2} sx={{ display: 'flex', gap: 4, justifyContent: 'start' }}>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Active Power All Unit (W) "
+                <InfoCard
+                  label="Active Power All Unit (W) "
                   value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.actPower, 0)}
-                  previousValue={summaryPowerEnergyAllUnitListPrev.reduce((acc, curr) => acc + curr.actPower, 0)} />
+                  previousValue={summaryPowerEnergyAllUnitListPrev.reduce((acc, curr) => acc + curr.actPower, 0)}
+                  loading={false} />
               </Grid>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Apparent Power All Unit (VA) "
+                <InfoCard
+                  label="Apparent Power All Unit (VA) "
                   value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.appPower, 0)}
-                  previousValue={summaryPowerEnergyAllUnitListPrev.reduce((acc, curr) => acc + curr.appPower, 0)} />
+                  previousValue={summaryPowerEnergyAllUnitListPrev.reduce((acc, curr) => acc + curr.appPower, 0)}
+                  loading={false} />
               </Grid>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Reactive Power All Unit (VAR) "
+                <InfoCard
+                  label="Reactive Power All Unit (VAR) "
                   value={summaryPowerEnergyAllUnitList.reduce((acc, curr) => acc + curr.reactPower, 0)}
-                  previousValue={summaryPowerEnergyAllUnitListPrev.reduce((acc, curr) => acc + curr.reactPower, 0)} />
+                  previousValue={summaryPowerEnergyAllUnitListPrev.reduce((acc, curr) => acc + curr.reactPower, 0)}
+                  loading={false} />
               </Grid>
             </Grid>
           </Grid>
@@ -113,13 +125,25 @@ function DashboardCrypto() {
             <Typography variant="h3">Average</Typography>
             <Grid item pt={2} sx={{ display: 'flex', gap: 4, justifyContent: 'start' }}>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Voltage (V) " value={averageVolt} previousValue={averageVoltPrev} />
+                <InfoCard
+                  label="Voltage (V) "
+                  value={averageVolt}
+                  previousValue={averageVoltPrev}
+                  loading={false} />
               </Grid>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Frequency (Hz) " value={averageFreq} previousValue={averageFreqPrev} />
+                <InfoCard
+                  label="Frequency (Hz) "
+                  value={averageFreq}
+                  previousValue={averageFreqPrev}
+                  loading={false} />
               </Grid>
               <Grid item lg={4} xs={12}>
-                <InfoCard label="Power Factor (%) " value={averagePF} previousValue={averagePFPrev} />
+                <InfoCard
+                  label="Power Factor (%) "
+                  value={averagePF}
+                  previousValue={averagePFPrev}
+                  loading={false} />
               </Grid>
             </Grid>
             <Grid item pt={2} sx={{ display: 'flex', gap: 4, justifyContent: 'start' }}>
